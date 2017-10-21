@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "422501016820",
+    "firebase_url": "https://demoapp-88add.firebaseio.com",
+    "project_id": "demoapp-88add",
+    "storage_bucket": "demoapp-88add.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:422501016820:android:3f978801df427af2",
+        "android_client_info": {
+          "package_name": "jp.co.intec.demoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "422501016820-dc59j11f4qhs42rkqo8h9qa7rqd80dug.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "jp.co.intec.demoapp",
+            "certificate_hash": "768823a293f4dd61253c45794af6b10f7226ade5"
+          }
+        },
+        {
+          "client_id": "422501016820-9d1ior1q8k9vhtdqlcl8fc2cs9u458vq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL_knietsO-wMdIcncj8U68aGISaZ_A-0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "422501016820-9d1ior1q8k9vhtdqlcl8fc2cs9u458vq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
