@@ -21,11 +21,19 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
     private BluetoothAdapter mBluetoothAdapter;
     /** BLE 機器検索のタイムアウト(ミリ秒) */
     private static final long SCAN_PERIOD = 10000;
     private static final String TAG = "MainActivity";
+    private static final String BEACONUUID = "48534442-4C45-4144-80C0-180000000000";
+    private List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
+    private Map<String, Object> map = new HashMap<String, Object>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         //jacascriptを許可する
         myWebView.getSettings().setJavaScriptEnabled(true);
 
-        Handler mHandler = new Handler(); //
+        final Handler mHandler = new Handler(); //
 
         final BluetoothManager bluetoothManager =
                 (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
@@ -53,15 +61,22 @@ public class MainActivity extends AppCompatActivity {
 
         // スキャン開始
         mBluetoothAdapter.startLeScan(mLeScanCallback);
+        final Runnable r = new Runnable() {
 
-        mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                // タイムアウト
-                Log.d(TAG, "タイムアウト");
+                // タイムアウトは今回は未実装　postDelaydで実装できるはず
+               // Log.d(TAG, "タイムアウト");
                 mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                if (dataList.get(0).get("UUID").equals(BEACONUUID)) { // 指定したUUIDが含まれていた場合
+                    //サーバにdata送信
+                    Cilent task = new Cilent();
+                    task.execute(dataList.get(0));
+                }
+                mHandler.postDelayed(this, 1000);
             }
-        }, SCAN_PERIOD);
+        };
+        mHandler.post(r);
     }
 
     private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
@@ -69,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
         public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
             Log.d(TAG, "receive!!!");
             getScanData(scanRecord);
+            map.put("name",device.getName());
+            map.put("address",device.getAddress());
+            dataList.add(map);
             Log.d(TAG, "device name:"+device.getName() );
             Log.d(TAG, "device address:"+device.getAddress() );
         }
@@ -108,6 +126,12 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "UUID:"+uuid );
                 Log.d(TAG, "major:"+major );
                 Log.d(TAG, "minor:"+minor );
+                if(uuid.equals(BEACONUUID)){
+                    map.put("UUID",uuid);
+                }else{
+                    map.put("UUID","NoMatch");
+                    dataList.add(map);
+                }
             }
         }
     }
@@ -130,5 +154,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Google Play Services が利用不可です", Toast.LENGTH_LONG).show();
             }
         }
+    }
+    private void sendData(){
+
     }
 }
