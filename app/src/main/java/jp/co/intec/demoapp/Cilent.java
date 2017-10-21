@@ -33,6 +33,8 @@ public class Cilent extends AsyncTask<Map<String, Object>, Void, String> {
             HttpURLConnection con = null;
             URL url = null;
             String urlSt = "https://tomcat-team1.hackathon.i-lop.net/demo/sv/PushPublish";
+            FcmTestFirebaseInstanceIdService token = new FcmTestFirebaseInstanceIdService();
+
 
             try {
                 // URLの作成
@@ -54,6 +56,7 @@ public class Cilent extends AsyncTask<Map<String, Object>, Void, String> {
                     jsonParam.put("UUID", map[0].get("UUID"));
                     jsonParam.put("name", map[0].get("name"));
                     jsonParam.put("address", map[0].get("address"));
+                    jsonParam.put("token", new FcmTestFirebaseInstanceIdService().token);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

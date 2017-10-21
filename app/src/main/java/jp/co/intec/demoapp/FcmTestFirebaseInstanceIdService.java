@@ -11,7 +11,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
  * Created by Shirai on 2016/08/05.
  */
 public class FcmTestFirebaseInstanceIdService extends FirebaseInstanceIdService {
-
+    public String token = null;
     /**
      * ログ出力用
      */
@@ -25,6 +25,7 @@ public class FcmTestFirebaseInstanceIdService extends FirebaseInstanceIdService 
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.i(TAG, "Refreshed token: " + refreshedToken);
         System.out.println("***********Refreshed token*************: " + refreshedToken);
+        token = refreshedToken;
     }
 
 }

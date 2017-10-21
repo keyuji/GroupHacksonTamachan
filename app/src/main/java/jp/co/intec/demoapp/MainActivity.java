@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
                     map.put("UUID",uuid);
                 }else{
                     map.put("UUID","NoMatch");
-                    dataList.add(map);
                 }
             }
         }
